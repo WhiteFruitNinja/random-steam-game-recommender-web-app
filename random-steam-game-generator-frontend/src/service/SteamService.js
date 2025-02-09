@@ -6,6 +6,9 @@ const SteamService = {
     getSteamApp: async () => {
         try {
             const response = await axios.get(`${API_URL}/randomApp`);
+            if (!response.data) {
+                throw new Error('No data returned from the API');
+            }
             return response.data;
         } catch (error) {
             console.error('Error fetching Steam app:', error);

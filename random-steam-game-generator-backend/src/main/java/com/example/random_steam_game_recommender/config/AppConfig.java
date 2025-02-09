@@ -13,9 +13,4 @@ public class AppConfig {
         return builder.build();
     }
 
-    @Bean
-    public RestTemplate restTemplateSteamAppDetails(RestTemplateBuilder builder) {
-        return builder.build();
-    }
-
 }

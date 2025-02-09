@@ -19,15 +19,12 @@ public class SteamService {
     private static final String BASE_URL = "http://api.steampowered.com/";
     private static final String BASE_DETAIL_URL = "https://store.steampowered.com/";
     private final RestTemplate restTemplateSteamApp;
-    private final RestTemplate restTemplateSteamAppDetails;
     private List<App> appList;
     private GameResponse gameResponse;
     private final Random random = new Random();
 
-    public SteamService(RestTemplate restTemplateSteamApp,
-                        RestTemplate restTemplateSteamAppDetails) {
+    public SteamService(RestTemplate restTemplateSteamApp) {
         this.restTemplateSteamApp = restTemplateSteamApp;
-        this.restTemplateSteamAppDetails = restTemplateSteamAppDetails;
         fetchAppList();
     }
 

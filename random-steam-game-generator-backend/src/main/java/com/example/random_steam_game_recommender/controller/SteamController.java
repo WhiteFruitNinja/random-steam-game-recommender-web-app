@@ -23,13 +23,20 @@ public class SteamController {
 
     @GetMapping("/randomApp")
     public ResponseEntity<SteamService.GameResponse> getRandomApp() {
+        System.out.println("Received request for a random app"); // Log request
         SteamService.App randomApp = steamService.getRandomApp();
         if (randomApp == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         int appId = randomApp.getAppid();
+        System.out.println("Fetched Random App ID: " + appId); // Log app ID
         SteamService.GameResponse randomAppDetails = steamService.fetchAppDetailList(appId);
         return ResponseEntity.ok(randomAppDetails);
     }
 
+    @GetMapping("/getApp")
+    public ResponseEntity<SteamService.GameResponse> getSpecificApp(@RequestParam int appId) {
+        SteamService.GameResponse specificAppDetails = steamService.fetchAppDetailList(appId);
+        return ResponseEntity.ok(specificAppDetails);
+    }
 }
