@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UserForm from './components/UserForm';
+import UserRegisterForm from './components/UserRegisterForm';
 import UserList from './components/UserList';
 import SteamApp from './components/SteamApp';
 import Header from './Header';
@@ -19,8 +19,7 @@ const App = () => {
         <div className='app'>
             <Header/>
             <SteamApp appId={steamAppId}/>
-            <UserForm userId={userId} refreshUsers={refreshUsers} setUserId={setUserId} />
-            <UserList setUserId={setUserId} refreshUsers={refreshUsers} />
+            <UserRegisterForm userId={userId} refreshUsers={refreshUsers} setUserId={setUserId} />
             <Footer/>
         </div>
     );

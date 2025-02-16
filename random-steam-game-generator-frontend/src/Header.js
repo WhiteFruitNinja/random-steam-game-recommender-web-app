@@ -2,7 +2,8 @@ import React from 'react';
 
 const Header=()=>{
     return(
-        <div className="header">
+        <div className="header-parent">
+          <div className="header-child">
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
               <div className="container-fluid">
                 <a className="navbar-brand" href="#">Random Steam Game Generator</a>
@@ -11,10 +12,11 @@ const Header=()=>{
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent" style={{flex: 'none'}}>
                   <button className="btn btn-outline-success" type="submit" style={{marginInline: '5px'}}>Login</button>
-                  <button className="btn btn-outline-success" type="submit" style={{marginInline: '5px'}}>Signup</button>
+                  <button className="btn btn-outline-success" type="submit" data-bs-toggle="modal" data-bs-target=".modal" style={{marginInline: '5px'}}>Signup</button>
                 </div>
               </div>
             </nav>
+          </div>
         </div>
     )
 }

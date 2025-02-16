@@ -3,28 +3,43 @@ package com.example.random_steam_game_recommender.controller;
 import com.example.random_steam_game_recommender.model.User;
 import com.example.random_steam_game_recommender.repository.UserRepository;
 import com.example.random_steam_game_recommender.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@EnableAutoConfiguration
 @CrossOrigin("http://localhost:3000")
 @RequestMapping("/api/v1")
 public class UserController {
 
-    private final UserRepository userRepository;
-
-    public UserController(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    @Qualifier("UserService")
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserController(@Qualifier("UserService") UserService userService){
+        this.userService = userService;
+    }
 
     @GetMapping("/getlist")
     public List<User> getUsers() {
@@ -34,6 +49,24 @@ public class UserController {
     @GetMapping("/get/{id}")
     public User findUserById(@PathVariable Long id) {
         return userService.getUserById(id);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@ModelAttribute("user") User user, HttpSession session, Model model, BindingResult result) {
+
+        User userFromDB = userService.findByUsername(user.getUsername());
+
+        if (userFromDB != null && bCryptPasswordEncoder.matches(user.getPassword(), userFromDB.getPassword())){
+            session.setAttribute("username", userFromDB.getUsername());
+            return ResponseEntity.ok("Logged in as " + user.getUsername());
+        } else {
+            System.out.println(user.toString());
+            System.out.println(user.getPassword());
+            System.out.println(userFromDB.toString());
+            System.out.println(userFromDB.getPassword());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Something went wrong. Try again.");
+        }
+
     }
 
     @PostMapping("/register")

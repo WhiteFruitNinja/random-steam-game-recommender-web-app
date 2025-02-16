@@ -21,6 +21,15 @@ public class SteamController {
         this.steamService = steamService;
     }
 
+    @RequestMapping("/randomApp")
+    @ResponseBody
+    public String readCookieValue(@CookieValue(value = "cookieName",
+            defaultValue = "defaultCookieValue") String cookieValue)
+    {
+        // Your logic here using the cookie value
+        return "Cookie Value: " + cookieValue;
+    }
+
     @GetMapping("/randomApp")
     public ResponseEntity<SteamService.GameResponse> getRandomApp() {
         System.out.println("Received request for a random app"); // Log request

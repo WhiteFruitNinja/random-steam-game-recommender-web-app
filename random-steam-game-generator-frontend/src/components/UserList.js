@@ -18,6 +18,7 @@ const UserList = ({ setUserId, refreshUsers }) => {
         fetchUsers();
     }, []);
 
+
     return (
         <div>
             <h2>Users List</h2>

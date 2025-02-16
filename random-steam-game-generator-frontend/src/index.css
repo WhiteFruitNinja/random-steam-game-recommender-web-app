@@ -26,20 +26,46 @@ code {
     monospace;
 }
 
-.header {
-  background-color: #f8f9fa;
-  height: 56px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  height: 100vh;
 }
 
-.footer {
+.header-parent {
+  position: absolute; /* Make it absolute */
+  top: 0; /* Stick to the top */
+  left: 0; /* Stick to the left */
+  width: 100%; /* Full width */
+  height: 56px; /* Fixed height for header */
   background-color: #f8f9fa;
-  height: 56px;
-  text-align: center;
-  position: sticky;
-  bottom: 0;
-  margin-top: auto;
-  padding: 10px;
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.header-child {
+  position: sticky; /* Make sticky within its parent */
+  top: 0; /* Stick to the top of its parent */
+  left: 0; /* Stick to the left of its parent */
+  width: 100%; /* Full width */
+  height: 100%; /* Fill the header-parent */
+}
+
+.footer-parent {
+  position: absolute; /* Make it absolute */
+  bottom: 0; /* Stick to the bottom */
+  left: 0; /* Stick to the left */
+  width: 100%; /* Full width */
+  height: 56px; /* Fixed height for footer */
+  background-color: #f8f9fa;
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.footer-child {
+  position: sticky; /* Make sticky within its parent */
+  bottom: 0; /* Stick to the bottom of its parent */
+  left: 0; /* Stick to the left of its parent */
+  width: 100%; /* Full width */
+  height: 100%; /* Fill the footer-parent */
 }

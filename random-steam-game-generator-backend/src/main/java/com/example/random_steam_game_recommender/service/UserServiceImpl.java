@@ -14,17 +14,24 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService{
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public void registerUser(User user) {
         // Hash the password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username); // Ensure you have this method in UserRepository
     }
 
     @Override
