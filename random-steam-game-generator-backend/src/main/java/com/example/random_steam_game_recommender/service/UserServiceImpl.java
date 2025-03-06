@@ -21,6 +21,7 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
     }
 
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -32,11 +33,6 @@ public class UserServiceImpl implements UserService{
 
     public User findByUsername(String username) {
         return userRepository.findByUsername(username); // Ensure you have this method in UserRepository
-    }
-
-    @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
     }
 
     @Override

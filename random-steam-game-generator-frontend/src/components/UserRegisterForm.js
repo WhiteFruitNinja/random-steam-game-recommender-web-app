@@ -55,7 +55,7 @@ const UserRegisterForm = ({ userId, refreshUsers, setUserId }) => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <div className="modal" tabIndex="-1">
+                <div className="modal modal-register" id="signupModal" tabIndex="-1">
                   <div className="modal-dialog">
                     <div className="modal-content">
                       <div className="modal-header">

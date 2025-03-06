@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import SteamService from '../service/SteamService';
+import { AuthContext } from '../context/AuthContext';
 
 const SteamApp = () => {
     const [steamAppData, setSteamAppData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const { isLoggedIn, handleLogout, username } = useContext(AuthContext);
 
     // Fetch steam app function
     const fetchSteamApp = async () => {
@@ -41,10 +43,7 @@ const SteamApp = () => {
             {steamAppData ? (
                 <>
                     <div className='main-container'>
-                        <div className='history-box card bs-dark' style={{ width: '200px', textAlign: 'center', height: '100%', paddingBlock: '50px' }}>
-                            <h1>History</h1>
-                        </div>
-                        <div className={`card bs-dark`} style={{ maxWidth: '500px' }} >
+                        <div className={`card bs-dark`} style={{ maxWidth: '500px', margin: 'auto'}} >
                             <div>
                                <img 
                                src={`https://cdn.cloudflare.steamstatic.com/steam/apps/${steamAppData.data.steam_appid}/header.jpg`}
@@ -64,9 +63,13 @@ const SteamApp = () => {
                               </form>
                             </div>
                         </div>
-                        <div className='favorites-box card bs-dark' style={{ width: '200px', textAlign: 'center', height: '100%', paddingBlock: '50px' }}>
-                            <h1>Favorites</h1>
-                        </div>
+                        {isLoggedIn ? (
+                            <>
+                                <div className='history-box card bs-dark' style={{ width: '200px', textAlign: 'center', height: '100%', paddingBlock: '50px'}}>
+                                    <h1>History</h1>
+                                </div>
+                            </>
+                        ) : (<></>)}
                     </div>
                 </>
             ) : (
