@@ -9,6 +9,8 @@ import lombok.ToString;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "user")
 @Getter
@@ -24,12 +26,17 @@ public class User {
 
     @NotEmpty(message = "Username cannot be empty")
     private String username;
+
     @NotEmpty(message = "Email cannot be empty")
     private String email;
+
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     @Transient
     private String passwordConfirm;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<History> histories;
 
 }

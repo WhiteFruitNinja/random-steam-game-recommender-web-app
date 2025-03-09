@@ -1,6 +1,8 @@
 package com.example.random_steam_game_recommender.controller;
 
+import com.example.random_steam_game_recommender.model.History;
 import com.example.random_steam_game_recommender.model.User;
+import com.example.random_steam_game_recommender.service.HistoryService;
 import com.example.random_steam_game_recommender.service.UserService;
 import com.example.random_steam_game_recommender.util.JwtUtil;
 import jakarta.servlet.http.Cookie;
@@ -30,13 +32,19 @@ public class UserController {
     private final UserService userService;
 
     @Autowired
+    @Qualifier("HistoryService")
+    private final HistoryService historyService;
+
+    @Autowired
     private JwtUtil jwtUtil;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserController(@Qualifier("UserService") UserService userService){
+    public UserController(@Qualifier("UserService") UserService userService,
+                          @Qualifier("HistoryService") HistoryService historyService){
         this.userService = userService;
+        this.historyService = historyService;
     }
 
     @GetMapping("/getlist")
@@ -69,10 +77,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> createUser(@RequestBody User user) {
+    public ResponseEntity<String> createUser(@RequestBody User user,
+                                             History history) {
         try {
             userService.registerUser(user);
-            return ResponseEntity.ok("User saved: " + user.toString());
+            history.setUser(user);
+            historyService.createHistory(history);
+            return ResponseEntity.ok("User created: " + user.toString());
         } catch (ConstraintViolationException e) {
             // Handle validation errors
             StringBuilder errors = new StringBuilder("Validation errors: ");

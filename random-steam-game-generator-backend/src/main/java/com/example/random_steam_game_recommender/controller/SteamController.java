@@ -21,7 +21,7 @@ public class SteamController {
         this.steamService = steamService;
     }
 
-    @RequestMapping("/randomApp")
+    @RequestMapping("/randomapp")
     @ResponseBody
     public String readCookieValue(@CookieValue(value = "cookieName",
             defaultValue = "defaultCookieValue") String cookieValue)
@@ -30,7 +30,7 @@ public class SteamController {
         return "Cookie Value: " + cookieValue;
     }
 
-    @GetMapping("/randomApp")
+    @GetMapping("/randomapp")
     public ResponseEntity<SteamService.GameResponse> getRandomApp() {
         System.out.println("Received request for a random app"); // Log request
         SteamService.App randomApp = steamService.getRandomApp();
@@ -43,8 +43,8 @@ public class SteamController {
         return ResponseEntity.ok(randomAppDetails);
     }
 
-    @GetMapping("/getApp")
-    public ResponseEntity<SteamService.GameResponse> getSpecificApp(@RequestParam int appId) {
+    @GetMapping("/getapp/{appId}")
+    public ResponseEntity<SteamService.GameResponse> getSpecificApp(@PathVariable int appId) {
         SteamService.GameResponse specificAppDetails = steamService.fetchAppDetailList(appId);
         return ResponseEntity.ok(specificAppDetails);
     }
