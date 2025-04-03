@@ -1,12 +1,12 @@
 package com.example.random_steam_game_recommender.service;
 
 import com.example.random_steam_game_recommender.model.History;
+import com.example.random_steam_game_recommender.model.User;
 import com.example.random_steam_game_recommender.repository.HistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class HistoryServiceImpl implements HistoryService{
@@ -28,12 +28,17 @@ public class HistoryServiceImpl implements HistoryService{
     }
 
     @Override
+    public List<History> getAllHistoriesByUser(User user) {
+        return historyRepository.findByUser(user);
+    }
+
+    @Override
     public List<History> getAllHistories() {
         return historyRepository.findAll();
     }
 
     @Override
-    public History updatehistory(History history) {
+    public History updateHistory(History history) {
         return historyRepository.save(history);
     }
 

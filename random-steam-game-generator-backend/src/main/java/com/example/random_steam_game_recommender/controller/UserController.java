@@ -66,7 +66,7 @@ public class UserController {
 
             System.out.println(userFromDB);
 
-            String token = jwtUtil.generateToken(userFromDB.getUsername()); // Generate JWT
+            String token = jwtUtil.generateToken(userFromDB.getUsername(), userFromDB.getId().toString()); // Generate JWT
             return ResponseEntity.ok(Map.of("token", token));
         } else if (!bCryptPasswordEncoder.matches(user.getPassword(), userFromDB.getPassword())) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Incorrect password");
@@ -77,12 +77,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> createUser(@RequestBody User user,
-                                             History history) {
+    public ResponseEntity<String> createUser(@RequestBody User user) {
         try {
             userService.registerUser(user);
-            history.setUser(user);
-            historyService.createHistory(history);
             return ResponseEntity.ok("User created: " + user.toString());
         } catch (ConstraintViolationException e) {
             // Handle validation errors

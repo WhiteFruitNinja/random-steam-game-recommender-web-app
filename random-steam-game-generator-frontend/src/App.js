@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import UserRegisterForm from './components/UserRegisterForm';
 import UserLoginForm from './components/UserLoginForm';
-import UserList from './components/UserList';
 import SteamApp from './components/SteamApp';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './components/Header';
 import { AuthProvider } from './context/AuthContext';
-import { Route, Routes } from 'react-router-dom';
+import CommentsComponent from './components/CommentsComponent';
 
 
 const App = () => {
     const [userId, setUserId] = useState(null);
-    const [steamAppId] = useState(null);
+    const [steamAppId, setSteamAppId] = useState(null);
 
+    const handleSteamAppIdSubmit = (id) => {
+        setSteamAppId(id);
+        console.log(id);
+    };
 
     const refreshUsers = () => {
         setUserId(null);
@@ -21,11 +23,10 @@ const App = () => {
     return (
         <div className='app'>
             <AuthProvider>
-                <Header/>
-                <SteamApp appId={steamAppId}/>
+                <Header steamAppId={steamAppId} setSteamAppId={setSteamAppId} onFormSubmit={handleSteamAppIdSubmit} />
+                <SteamApp customSteamAppId={steamAppId} onFormSubmit={handleSteamAppIdSubmit} />
                 <UserRegisterForm userId={userId} refreshUsers={refreshUsers} setUserId={setUserId} />
                 <UserLoginForm/>
-                <Footer/>
             </AuthProvider>
         </div>
     );
