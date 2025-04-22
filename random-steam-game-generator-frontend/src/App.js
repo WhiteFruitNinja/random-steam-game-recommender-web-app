@@ -13,7 +13,6 @@ const App = () => {
 
     const handleSteamAppIdSubmit = (id) => {
         setSteamAppId(id);
-        console.log(id);
     };
 
     const refreshUsers = () => {

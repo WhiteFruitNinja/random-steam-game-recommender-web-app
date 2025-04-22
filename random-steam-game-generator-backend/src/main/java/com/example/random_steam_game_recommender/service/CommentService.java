@@ -3,8 +3,6 @@ package com.example.random_steam_game_recommender.service;
 import com.example.random_steam_game_recommender.model.Comment;
 import com.example.random_steam_game_recommender.model.CommentDTO;
 import com.example.random_steam_game_recommender.model.User;
-import com.example.random_steam_game_recommender.repository.CommentRepository;
-import com.example.random_steam_game_recommender.repository.HistoryRepository;
 
 import java.util.List;
 

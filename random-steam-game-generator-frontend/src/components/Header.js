@@ -24,8 +24,8 @@
                             </button>
                             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                                 <form onSubmit={handleSubmit}>
-                                    <input type="text" placeholder='Insert steam app id' value={customSteamAppId} onChange={e => setCustomSteamAppId(e.target.value)} required/>
-                                    <button type="submit">Enter</button>
+                                    <input className='rounded' style={{ marginRight: "5px"}} type="text" placeholder='Insert steam app id' value={customSteamAppId} onChange={e => setCustomSteamAppId(e.target.value)} required/>
+                                    <button className='rounded' type="submit">Enter</button>
                                 </form>
                                 {/* Conditionally render Login and Signup buttons or Logout button */}
                                 {!isLoggedIn ? (
